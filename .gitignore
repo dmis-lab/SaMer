@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*.pt
+*.pth
+*.safetensors
+*.tmp
+.cache/
+.venv/
+checkpoints/
+outputs/
+data/
+logs/
+wandb/
