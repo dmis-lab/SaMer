@@ -114,15 +114,35 @@ PYTHONPATH=. python scripts/eval.py \
 
 ## Repository Structure
 
-- `samer/merging.py`: SaMer merge operator.
-- `samer/training.py`: projector-only training wrapper with retrieval loss.
-- `scripts/train.py`: training entrypoint.
-- `scripts/cache.py`: compressed retrieval cache builder.
-- `scripts/eval.py`: retrieval evaluator.
-- `bash/train.sh`: terminal training launcher.
-- `bash/cache.sh`: terminal cache builder.
-- `bash/inference.sh`: terminal retrieval evaluator.
-- `configs/samer_k64_colpali.yaml`: default SaMer configuration.
+```text
+SaMer/
+├── assets/                         # Static assets and architecture figures
+│   └── architecture.png            # Method overview figure
+├── bash/                           # Terminal launch scripts
+│   ├── train.sh                    # Projector-only SaMer training
+│   ├── cache.sh                    # Compressed retrieval cache builder
+│   └── inference.sh                # Retrieval evaluation launcher
+├── configs/                        # YAML configuration files
+│   └── samer_k64_colpali.yaml      # Default K=64 ColPali SaMer config
+├── samer/                          # Core SaMer package
+│   ├── cache_io.py                 # Retrieval cache serialization utilities
+│   ├── colpali.py                  # ColPali model loading and embedding helpers
+│   ├── coords.py                   # Visual token coordinate construction
+│   ├── flickr.py                   # Flickr30k-Entities data utilities
+│   ├── losses.py                   # Retrieval-only training loss
+│   ├── merging.py                  # SaMer feature-spatial object-aware merging
+│   ├── metrics.py                  # Retrieval metrics
+│   ├── scoring.py                  # MaxSim scoring utilities
+│   ├── train_data.py               # Training dataset and collator
+│   └── training.py                 # Projector-only training wrapper
+├── scripts/                        # Python entrypoints
+│   ├── train.py                    # Training entrypoint
+│   ├── cache.py                    # Cache construction entrypoint
+│   └── eval.py                     # Retrieval evaluation entrypoint
+├── .gitignore
+├── requirements.txt                # Python dependencies
+└── README.md                       # Project documentation
+```
 
 ## Contact
 
