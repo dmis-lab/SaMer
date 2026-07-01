@@ -1,4 +1,4 @@
-# SaMer: Object-Aware Token Merging for Efficient Multi-Vector Retrieval
+# Do All Visual Tokens Matter Equally? Object-Evidence Preserving Token Merging for Vision-Language Retrieval
 
 ## Overview
 
