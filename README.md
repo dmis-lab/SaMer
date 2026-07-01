@@ -18,8 +18,8 @@ backbone, and trains only the shared projection layer with retrieval loss.
 
 No auxiliary grounding or bbox loss is used. At inference time, SaMer is
 bbox-free and applies the same feature-spatial merge before MaxSim scoring. The
-default setting uses K=64, cluster iterations=3, spatial weight=0.1, object
-penalty eta=1.0, and assignment temperature=0.07.
+default setting uses K=64, cluster iterations=3, spatial weight=0.1, and
+assignment temperature=0.07.
 
 ## Installation
 
@@ -76,7 +76,6 @@ RUN_NAME=samer_k64_colpali \
 OUTPUT_DIR=checkpoints/samer_k64_colpali \
 TRAIN_BATCH_SIZE=16 \
 GRAD_ACCUM_STEPS=4 \
-OBJECT_PENALTY_ETA=1.0 \
 ASSIGNMENT_TEMPERATURE=0.07 \
 bash bash/train.sh
 ```

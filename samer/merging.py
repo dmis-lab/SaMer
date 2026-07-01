@@ -12,7 +12,6 @@ class MergeConfig:
         num_regions: Number of merged image-side tokens to produce.
         cluster_iters: Number of feature-spatial clustering iterations.
         spatial_weight: Weight for normalized 2D coordinate distance.
-        object_penalty_eta: Strength of the object inconsistency penalty.
         assignment_temperature: Temperature for differentiable assignments.
         seed: Reserved random seed for deterministic extensions.
     """
@@ -20,7 +19,6 @@ class MergeConfig:
     num_regions: int = 64
     cluster_iters: int = 3
     spatial_weight: float = 0.1
-    object_penalty_eta: float = 1.0
     assignment_temperature: float = 0.07
     seed: int = 42
 
@@ -103,7 +101,6 @@ def merge_tokens_differentiable(
         "assignments": assignments.detach().cpu(),
         "num_empty_clusters": torch.as_tensor(empty),
         "assignment_entropy": _assignment_entropy(weights),
-        "object_penalty_eta": torch.as_tensor(config.object_penalty_eta, device=tokens.device, dtype=tokens.dtype),
         "assignment_tau": torch.as_tensor(config.assignment_temperature, device=tokens.device, dtype=tokens.dtype),
         "train_infer_assignment_agreement": (weights.argmax(dim=-1) == assignments).float().mean().detach(),
     }
@@ -192,7 +189,7 @@ def _differentiable_centroids(
     dist = _feature_spatial_distance(tokens, coords, feature_centers, spatial_centers, config.spatial_weight)
     if bbox_labels is not None and hard_assignments is not None:
         penalty = _instance_inconsistency_penalty(hard_assignments, bbox_labels, feature_centers.size(0))
-        dist = dist + float(config.object_penalty_eta) * penalty.to(device=tokens.device, dtype=tokens.dtype)
+        dist = dist + penalty.to(device=tokens.device, dtype=tokens.dtype)
     tau = max(float(config.assignment_temperature), 1e-6)
     weights = torch.softmax(-dist / tau, dim=-1)
     denom = weights.sum(dim=0).clamp_min(1e-6)

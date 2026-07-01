@@ -19,7 +19,6 @@ merge:
   num_regions: 64
   cluster_iters: 3
   spatial_weight: 0.1
-  object_penalty_eta: 1.0
   assignment_temperature: 0.07
   seed: 42
 

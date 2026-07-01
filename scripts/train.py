@@ -122,7 +122,6 @@ def main() -> None:
             num_regions=int(merge_cfg.get("num_regions", 64)),
             cluster_iters=int(merge_cfg.get("cluster_iters", 3)),
             spatial_weight=float(merge_cfg.get("spatial_weight", 0.1)),
-            object_penalty_eta=float(merge_cfg.get("object_penalty_eta", 1.0)),
             assignment_temperature=float(merge_cfg.get("assignment_temperature", 0.07)),
             seed=int(merge_cfg.get("seed", 42)),
         ),

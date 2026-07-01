@@ -10,7 +10,6 @@ from samer.scoring import mean_maxsim
 
 
 MERGE_DIAGNOSTIC_KEYS = (
-    "object_penalty_eta",
     "assignment_tau",
     "assignment_entropy",
     "object_assignment_kl",

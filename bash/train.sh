@@ -17,7 +17,6 @@ LOCAL_FILES_ONLY="${LOCAL_FILES_ONLY:-false}"
 REPORT_TO="${REPORT_TO:-none}"
 
 NUM_REGIONS="${NUM_REGIONS:-64}"
-OBJECT_PENALTY_ETA="${OBJECT_PENALTY_ETA:-1.0}"
 ASSIGNMENT_TEMPERATURE="${ASSIGNMENT_TEMPERATURE:-0.07}"
 SPATIAL_WEIGHT="${SPATIAL_WEIGHT:-0.1}"
 CLUSTER_ITERS="${CLUSTER_ITERS:-3}"
@@ -39,7 +38,7 @@ fi
 
 mkdir -p "$OUTPUT_DIR"
 export DATA_ROOT MODEL_NAME LOCAL_FILES_ONLY RUN_NAME OUTPUT_DIR
-export NUM_REGIONS OBJECT_PENALTY_ETA ASSIGNMENT_TEMPERATURE SPATIAL_WEIGHT CLUSTER_ITERS
+export NUM_REGIONS ASSIGNMENT_TEMPERATURE SPATIAL_WEIGHT CLUSTER_ITERS
 export TRAIN_BATCH_SIZE EVAL_BATCH_SIZE GRAD_ACCUM_STEPS LEARNING_RATE NUM_TRAIN_EPOCHS
 export DATALOADER_NUM_WORKERS BF16 REPORT_TO
 
@@ -78,7 +77,6 @@ cfg["data"]["limit_eval_images"] = env_int_or_none("LIMIT_EVAL_IMAGES")
 cfg["merge"]["num_regions"] = int(os.environ["NUM_REGIONS"])
 cfg["merge"]["cluster_iters"] = int(os.environ["CLUSTER_ITERS"])
 cfg["merge"]["spatial_weight"] = float(os.environ["SPATIAL_WEIGHT"])
-cfg["merge"]["object_penalty_eta"] = float(os.environ["OBJECT_PENALTY_ETA"])
 cfg["merge"]["assignment_temperature"] = float(os.environ["ASSIGNMENT_TEMPERATURE"])
 
 cfg["training"]["output_dir"] = os.environ["OUTPUT_DIR"]
