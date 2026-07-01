@@ -2,7 +2,7 @@
 
 ## Overview
 
-![SaMer overview](assets/overview.png)
+![SaMer overview](assets/architecture.png)
 
 ColPali-style multi-vector retrievers store and score many image-side tokens.
 SaMer compresses post-projector visual tokens with an object-aware merge
