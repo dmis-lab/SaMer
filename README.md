@@ -1,5 +1,10 @@
 # Do All Visual Tokens Matter Equally? Object-Evidence Preserving Token Merging for Vision-Language Retrieval
 
+<p align="center">
+  <a href="https://arxiv.org/abs/2607.04605"><strong>Paper</strong></a> ·
+  <a href="https://suhyeong10.github.io/samer-project-page/"><strong>Project Page</strong></a>
+</p>
+
 ## Overview
 
 ![SaMer overview](assets/architecture.png)
