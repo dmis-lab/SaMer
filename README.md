@@ -1,8 +1,10 @@
 # Do All Visual Tokens Matter Equally? Object-Evidence Preserving Token Merging for Vision-Language Retrieval
 
 <p align="center">
-  <a href="https://arxiv.org/abs/2607.04605"><strong>Paper</strong></a> ·
-  <a href="https://suhyeong10.github.io/samer-project-page/"><strong>Project Page</strong></a>
+  <a href="https://arxiv.org/abs/2607.04605"><strong>📄Paper</strong></a> ·
+  <a href="https://huggingface.co/collections/dmis-lab/samer"><strong>🤗Models</strong></a> ·
+  <a href="https://suhyeong10.github.io/samer-project-page/"><strong>🌐Project Page</strong></a>
+  
 </p>
 
 ## Overview
@@ -149,6 +151,15 @@ SaMer/
 └── README.md                       # Project documentation
 ```
 
-## Contact
-
-For questions or issues, please contact the project maintainers.
+## Citation
+```bib
+@misc{park2026visualtokensmatterequally,
+      title={Do All Visual Tokens Matter Equally? Object-Evidence Preserving Token Merging for Vision-Language Retrieval},
+      author={Suhyeong Park and Junha Jung and Jungwoo Park and Jaewoo Kang},
+      year={2026},
+      eprint={2607.04605},
+      archivePrefix={arXiv},
+      primaryClass={cs.IR},
+      url={https://arxiv.org/abs/2607.04605},
+}
+```
