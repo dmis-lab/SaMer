@@ -69,7 +69,7 @@ CUDA_VISIBLE_DEVICES=0 \
 bash bash/train.sh
 ```
 
-Multi-GPU without SLURM:
+Multi-GPU:
 ```bash
 DATA_ROOT=/path/to/flickr30k_entities \
 CUDA_VISIBLE_DEVICES=0,1,2,3 \
