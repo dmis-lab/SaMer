@@ -29,12 +29,12 @@ loss:
 training:
   output_dir: checkpoints/samer_k64_colpali
   run_name: samer_k64_colpali
-  per_device_train_batch_size: 16
-  per_device_eval_batch_size: 16
-  gradient_accumulation_steps: 4
-  learning_rate: 1.0e-4
-  weight_decay: 0.01
-  warmup_ratio: 0.05
+  per_device_train_batch_size: 32
+  per_device_eval_batch_size: 32
+  gradient_accumulation_steps: 2
+  learning_rate: 2.0e-4
+  weight_decay: 1.0e-5
+  warmup_ratio: 0.1
   num_train_epochs: 3
   bf16: true
   logging_steps: 20
