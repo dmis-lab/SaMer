@@ -1,0 +1,47 @@
+model:
+  model_name_or_path: vidore/colqwen2-v1.0-hf
+  local_files_only: false
+  train_projector: true
+  projector_train_patterns: [embedding_proj_layer]
+  projector_modules_to_save: [embedding_proj_layer]
+
+data:
+  root: /path/to/flickr30k_entities
+  train_split: train
+  eval_split: val
+  limit_train_images:
+  limit_eval_images:
+  max_bbox_phrases_per_caption: 4
+  min_bbox_area: 0.005
+  max_bbox_area: 1.0
+
+merge:
+  num_regions: 64
+  cluster_iters: 3
+  spatial_weight: 0.1
+  assignment_temperature: 0.07
+  seed: 42
+
+loss:
+  type: multi_positive_t2i
+  temperature: 0.07
+
+training:
+  output_dir: checkpoints/samer_k64_colqwen2
+  run_name: samer_k64_colqwen2
+  per_device_train_batch_size: 16
+  per_device_eval_batch_size: 16
+  gradient_accumulation_steps: 4
+  learning_rate: 1.0e-4
+  weight_decay: 0.01
+  warmup_ratio: 0.05
+  num_train_epochs: 3
+  bf16: true
+  logging_steps: 20
+  eval_strategy: epoch
+  save_strategy: epoch
+  save_total_limit: 2
+  dataloader_num_workers: 0
+  report_to: none
+  lr_scheduler_type: cosine
+  max_grad_norm: 1.0

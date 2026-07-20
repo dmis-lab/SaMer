@@ -8,7 +8,7 @@ import torch
 from transformers import Trainer, TrainingArguments
 import yaml
 
-from samer.colpali import load_colpali
+from samer.colpali import load_colpali, save_projector_checkpoint
 from samer.merging import MergeConfig
 from samer.train_data import ColPaliTrainCollator, FlickrCaptionDataset
 from samer.training import MERGE_DIAGNOSTIC_KEYS, MergedColPaliForTraining
@@ -52,7 +52,7 @@ class SaMerTrainer(Trainer):
         output_dir = output_dir or self.args.output_dir
         Path(output_dir).mkdir(parents=True, exist_ok=True)
         model = extract_model_from_parallel(self.model)
-        model.colpali.save_pretrained(output_dir)
+        save_projector_checkpoint(model.colpali, output_dir)
         if self.processing_class is not None:
             self.processing_class.save_pretrained(output_dir)
 

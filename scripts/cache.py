@@ -6,7 +6,7 @@ from tqdm import tqdm
 
 from samer.cache_io import save_cache
 from samer.colpali import encode_images, encode_texts, load_colpali
-from samer.coords import dtype_from_name, make_visual_coords
+from samer.coords import dtype_from_name
 from samer.flickr import load_image, read_captions, read_split_ids
 from samer.merging import MergeConfig, merge_tokens
 
@@ -44,11 +44,10 @@ def build_split(args, split: str, model, processor, device: torch.device) -> Non
     for start in tqdm(range(0, len(image_ids), args.batch_size), desc=f"{split}: images"):
         batch_ids = image_ids[start : start + args.batch_size]
         batch_images = [load_image(args.data_root, image_id) for image_id in batch_ids]
-        embeddings = encode_images(model, processor, batch_images, device)
-        for image_id, tokens in zip(batch_ids, embeddings):
-            coords = make_visual_coords(tokens.size(0))
-            full_num_tokens = tokens.size(0)
-            merged = merge_tokens(tokens, coords, config)
+        sequences = encode_images(model, processor, batch_images, device)
+        for image_id, sequence in zip(batch_ids, sequences, strict=True):
+            full_num_tokens = sequence.tokens.size(0)
+            merged = merge_tokens(sequence.tokens, sequence.coords, config)
             tokens = merged["tokens"]
             coords = merged["coords"]
             empty_counts.append(int(merged["num_empty_clusters"].item()))
@@ -58,6 +57,7 @@ def build_split(args, split: str, model, processor, device: torch.device) -> Non
                 "coords": coords,
                 "mask": torch.ones(tokens.size(0), dtype=torch.bool),
                 "full_num_tokens": full_num_tokens,
+                "source_grid_thw": sequence.grid_thw,
             }
 
     caption_rows = []

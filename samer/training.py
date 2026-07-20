@@ -2,8 +2,7 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 
-from samer.colpali import extract_embeddings
-from samer.coords import make_visual_coords
+from samer.colpali import extract_embeddings, extract_visual_tokens, prepare_image_inputs
 from samer.losses import multi_positive_t2i_loss
 from samer.merging import MergeConfig, merge_tokens_differentiable
 from samer.scoring import mean_maxsim
@@ -69,16 +68,18 @@ class MergedColPaliForTraining(nn.Module):
         if image_inputs is None or text_inputs is None or image_ids is None:
             raise ValueError("image_inputs, text_inputs, and image_ids are required.")
 
+        image_inputs = prepare_image_inputs(self.colpali, image_inputs)
         image_outputs = self.colpali(**image_inputs)
-        image_tokens = F.normalize(extract_embeddings(image_outputs).float(), p=2, dim=-1)
+        visual_sequences = extract_visual_tokens(image_outputs, image_inputs, self.colpali)
         query_outputs = self.colpali(**text_inputs)
         query_tokens = F.normalize(extract_embeddings(query_outputs).float(), p=2, dim=-1)
 
         merged_tokens = []
         empty_counts = []
         diagnostics = {key: [] for key in MERGE_DIAGNOSTIC_KEYS}
-        for batch_idx, tokens in enumerate(image_tokens):
-            coords = make_visual_coords(tokens.size(0)).to(tokens.device)
+        for batch_idx, sequence in enumerate(visual_sequences):
+            tokens = sequence.tokens
+            coords = sequence.coords
             bbox_labels = None
             if self.training and phrase_annotations is not None:
                 bbox_labels = _bbox_token_labels(
